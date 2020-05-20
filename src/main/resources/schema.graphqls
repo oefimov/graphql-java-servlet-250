@@ -1,0 +1,10 @@
+scalar Long
+
+type Query {
+    test(id: Long!): MyType!
+}
+
+type MyType {
+    id: Long!
+    values: [Long]
+}
