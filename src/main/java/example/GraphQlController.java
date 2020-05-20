@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 public class GraphQlController {
@@ -39,7 +39,7 @@ public class GraphQlController {
         delegateServlet = GraphQLHttpServlet.with(configuration);
     }
 
-    @PostMapping(value = "/graphql", produces = APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/graphql", produces = APPLICATION_JSON_VALUE)
     public void graphQlOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         delegateServlet.service(request, response);
     }

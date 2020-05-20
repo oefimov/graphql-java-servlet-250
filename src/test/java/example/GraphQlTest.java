@@ -11,10 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Config.class})
@@ -36,7 +36,6 @@ public class GraphQlTest {
             post("/graphql").content("{\"query\": \"{ test(id: 2) { id values } }\" }"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.data.test.values[0]").value(42));
     }
 
@@ -46,7 +45,6 @@ public class GraphQlTest {
             post("/graphql").content("{\"query\": \"{ test(id: 1) { id values } }\" }"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.errors[0].message").value("Internal Server Error(s) while executing query"));
     }
 
@@ -56,7 +54,6 @@ public class GraphQlTest {
             post("/graphql").content("{\"query\": \"{ test(id: 0) { id values } }\" }"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.errors[0].message").value("Internal Server Error(s) while executing query"));
     }
 }
